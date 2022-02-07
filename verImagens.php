@@ -7,6 +7,7 @@ include_once("conexao.php");
        $sql = "select * from arquivos ";  
        $buscar = mysqli_query($conexao, $sql);
        $linhas = mysqli_affected_rows($conexao);
+       print $linhas;
   }else{
        $sql = "select * from arquivos where barras = '$codbar' ";
        $buscar = mysqli_query($conexao, $sql);
@@ -36,11 +37,11 @@ include_once("conexao.php");
           <input type="submit" value="Procurar">
       </fieldset>
     </form>
-
+    <a href="index.php">Voltar</a>
       <?php
-          if ($linhas == -1){
+          if ($linhas == 0 && empty($_POST['codbarra'])){
             print "<h1>Banco de dados vazio</h1>";
-          }else if ($linhas == 0){
+          }else if ($linhas == 0 && !empty($_POST['codbarra'])){
               print"<h2>Nenhum arquivo associado com o código $codbar</h2><br>";
           }else {          
           
@@ -53,8 +54,8 @@ include_once("conexao.php");
               
               print '
               <div class="fotos">
-                 ID:'. $codigo .'<br>
                  
+                 Código: '.$barra.' <br>
                  <a href="upload/'.$arquivo.'" target="blank"><img src="upload/'.$arquivo.'" alt=""></a>
                  Data'. $data.' <br>
               </div>';
